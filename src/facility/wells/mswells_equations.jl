@@ -168,11 +168,7 @@ function Jutul.update_equation_in_entity!(eq_buf::AbstractVector{T_e}, self_cell
 end
 
 function total_density(s, rho, cell)
-    rho_tot = 0.0
-    for ph in 1:size(rho, 1)
-        rho_tot += rho[ph, cell]*s[ph, cell]
-    end
-    return rho_tot
+    return sum(rho[:, cell] .* s[:, cell])
 end
 
 function component_sum(mass, i)
