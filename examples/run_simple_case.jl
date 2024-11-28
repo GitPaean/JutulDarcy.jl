@@ -32,3 +32,4 @@ plot_well_results(ws);
 #plot_reservoir(case, states, step = length(case.dt), key = :Saturations);
 
 ## plot the well results
+plot_well_results(ws);
