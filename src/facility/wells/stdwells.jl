@@ -23,6 +23,7 @@ const StandardWellFlowModel = SimulationModel{<:SimpleWellDomain, <:SimpleWellSy
 
 function SimpleWellSystem(ncomp, phases; c = 1e-8, reference_densities = ones(ncomp))
     reference_densities = tuple(reference_densities...)
+    @infiltrate
     return SimpleWellSystem(ncomp, phases, c, reference_densities)
 end
 
@@ -30,6 +31,7 @@ function SimpleWellSystem(system; kwarg...)
     rho = reference_densities(system)
     ncomp = number_of_components(system)
     phases = get_phases(system)
+    @infiltrate
     return SimpleWellSystem(ncomp, phases; reference_densities = rho, kwarg...)
 end
 
@@ -42,27 +44,32 @@ function flash_wellstream_at_surface(var, well_model, system::SimpleWellSystem, 
     X = well_state.MassFractions
     vol = X./rhoS
     volfrac = vol./sum(vol)
+    @infiltrate
     return (rhoS, volfrac)
 end
 
 function Jutul.values_per_entity(model, v::WellMassFractions)
     sys = model.system
+    @infiltrate
     return number_of_components(sys)
 end
 
 function Jutul.select_primary_variables!(pvars, s::SimpleWellSystem, model::SimpleWellFlowModel)
     pvars[:Pressure] = Pressure(max_rel = Inf)
     pvars[:MassFractions] = WellMassFractions()
+    @infiltrate
 end
 
 function Jutul.select_secondary_variables!(S, system::SimpleWellSystem, model::SimpleWellFlowModel)
     S[:TotalMasses] = TotalMasses()
+    @infiltrate
 end
 
 function select_parameters!(prm, s::SimpleWellDomain, model::SimpleWellFlowModel)
     prm[:FluidVolume] = FluidVolume()
     prm[:WellIndices] = WellIndices()
     prm[:PerforationGravityDifference] = PerforationGravityDifference()
+    @infiltrate
 end
 
 function Jutul.initialize_extra_state_fields!(state, d::DiscretizedDomain, m::SimpleWellFlowModel)
@@ -181,4 +188,5 @@ function update_connection_pressure_drop!(dp, well_state, well_model, res_state,
 
         dp[i] = dp_current
     end
+    @infiltrate
 end
