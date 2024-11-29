@@ -236,12 +236,12 @@ VOIL
 KRW
 /
 
-TSTEP
-    0.0100
-    0.0200
-    0.0400
-    0.0400
-/
+-- TSTEP
+--    0.0100
+--    0.0200
+--    0.0400
+--    0.0400
+-- /
 WELSPECS
 INJ FIELD 1 1 1* GAS /
 PROD FIELD 5 1 1* GAS /

@@ -24,11 +24,11 @@ case = setup_case_from_data_file(data_path)
 # PrettyPrint.pprint(case)
 # println("pretty print usage end")
 
-result = simulate_reservoir(case, info_level = 1)
+result = simulate_reservoir(case, info_level = 3)
 ws, states = result;
+plot_well_results(ws);
 
 ## plotting the results
 #plot_reservoir(case, states, step = length(case.dt), key = :Saturations);
 
 ## plot the well results
-plot_well_results(ws);
