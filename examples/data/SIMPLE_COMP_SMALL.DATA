@@ -236,6 +236,12 @@ VOIL
 KRW
 /
 
+TSTEP
+    0.0100
+    0.0200
+    0.0400
+    0.0400
+/
 WELSPECS
 INJ FIELD 1 1 1* GAS /
 PROD FIELD 5 1 1* GAS /
@@ -243,12 +249,6 @@ PROD FIELD 5 1 1* GAS /
 COMPDAT
 INJ  1  1 1 1 OPEN 2* 0.0151 / 
 PROD 5 1 1 1 OPEN 2* 0.0151 /
-/
-TSTEP
-    0.0100
-    0.0200
-    0.0400
-    0.0400
 /
 WCONINJE
 INJ GAS OPEN BHP 100000 1* 150 /
@@ -292,9 +292,9 @@ TSTEP
     2*1.0000
     3*1.0000
     20*1.0
-    50*2.0
-    50*8.0
-    50*8.0
+--    50*2.0
+--    50*8.0
+--    50*8.0
 --    473*15
 /
 END
