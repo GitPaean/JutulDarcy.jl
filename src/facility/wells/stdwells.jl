@@ -44,20 +44,20 @@ function flash_wellstream_at_surface(var, well_model, system::SimpleWellSystem, 
     X = well_state.MassFractions
     vol = X./rhoS
     volfrac = vol./sum(vol)
-    @infiltrate
+    #@infiltrate
     return (rhoS, volfrac)
 end
 
 function Jutul.values_per_entity(model, v::WellMassFractions)
     sys = model.system
-    @infiltrate
+    #@infiltrate
     return number_of_components(sys)
 end
 
 function Jutul.select_primary_variables!(pvars, s::SimpleWellSystem, model::SimpleWellFlowModel)
     pvars[:Pressure] = Pressure(max_rel = Inf)
     pvars[:MassFractions] = WellMassFractions()
-    @infiltrate
+    #@infiltrate
 end
 
 function Jutul.select_secondary_variables!(S, system::SimpleWellSystem, model::SimpleWellFlowModel)
@@ -69,7 +69,7 @@ function select_parameters!(prm, s::SimpleWellDomain, model::SimpleWellFlowModel
     prm[:FluidVolume] = FluidVolume()
     prm[:WellIndices] = WellIndices()
     prm[:PerforationGravityDifference] = PerforationGravityDifference()
-    @infiltrate
+    #@infiltrate
 end
 
 function Jutul.initialize_extra_state_fields!(state, d::DiscretizedDomain, m::SimpleWellFlowModel)
@@ -188,5 +188,5 @@ function update_connection_pressure_drop!(dp, well_state, well_model, res_state,
 
         dp[i] = dp_current
     end
-    @infiltrate
+    # @infiltrate
 end

@@ -311,6 +311,7 @@ end
 
 function perforation_phase_mass_flux(λ_t, conn, state_res, state_well, ph)
     # ψ is pressure difference from reservoir to well. If it is negative, we are injecting into the reservoir.
+    @infiltrate
     ψ = perforation_phase_potential_difference(conn, state_res, state_well, ph)
     if ψ < 0
         wc = conn.well

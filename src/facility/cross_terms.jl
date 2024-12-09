@@ -201,6 +201,7 @@ function update_cross_term_in_entity!(out, i,
     )
     # Hack for sparsity detection
     q_t += 0*bottom_hole_pressure(state_well)
+    # @infiltrate
 
     if isa(ctrl, InjectorControl)
         if value(q_t) < 0

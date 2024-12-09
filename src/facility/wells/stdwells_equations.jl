@@ -3,7 +3,7 @@ function Jutul.convergence_criterion(model::StandardWellFlowModel, storage, eq::
     scale = 0.1
     e = map(x -> scale*abs(x)*dt/vol, vec(r))
     R = (CNV = (errors = e, names = map(x -> "M$x", eachindex(e))), )
-    @infiltrate
+    #@infiltrate
     return R
 end
 
@@ -29,7 +29,7 @@ function Jutul.update_equation_in_entity!(eq_buf::AbstractVector{T_e}, self_cell
     M₀ = state0[conserved]
     M = state[conserved]
     @. eq_buf = (M - M₀)/Δt
-    @infiltrate
+    #@infiltrate
 end
 
 function Jutul.update_equation_in_entity!(eq_buf::AbstractVector{T_e}, self_cell, state, state0, eq::ConservationLaw, model::SimpleWellModel, Δt, ldisc = local_discretization(eq, self_cell)) where T_e
@@ -37,5 +37,5 @@ function Jutul.update_equation_in_entity!(eq_buf::AbstractVector{T_e}, self_cell
     M₀ = state0[conserved]
     M = state[conserved]
     @. eq_buf = (M - M₀)/Δt
-    @infiltrate
+    #@infiltrate
 end

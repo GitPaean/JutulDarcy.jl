@@ -89,6 +89,7 @@ function compositional_mass_update_loop!(totmass, model, F, ρ, Sat, X, Y, sw, p
     sys = model.system
     phase_ix = phase_indices(sys)
     N = size(totmass, 1)
+    #@infiltrate
     for cell in ix
         @inbounds two_phase_compositional_mass!(totmass, F[cell].state, sw, pv, ρ, X, Y, Sat, cell, N, phase_ix)
     end
@@ -129,6 +130,7 @@ function update_mass_two_phase_compositional!(M, state, sw, Φ, ρ, X, Y, S, cel
 end
 
 function single_phase_mass!(M, ρ, S, mass_fractions, Φ, cell, N, phase)
+    #@infiltrate
     S_eos = S[phase, cell]
     if S_eos < MINIMUM_COMPOSITIONAL_SATURATION
         S_eos = replace_value(S_eos, MINIMUM_COMPOSITIONAL_SATURATION)
@@ -140,6 +142,7 @@ function single_phase_mass!(M, ρ, S, mass_fractions, Φ, cell, N, phase)
 end
 
 function two_phase_mass!(M, ρ, S, X, Y, Φ, cell, N, l, v)
+    #@infiltrate
     @inbounds M_l = ρ[l, cell] * S[l, cell]
     @inbounds M_v = ρ[v, cell] * S[v, cell]
     for c in 1:N

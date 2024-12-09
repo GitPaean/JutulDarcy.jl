@@ -2,7 +2,9 @@ using JutulDarcy
 using Jutul
 using GLMakie
 using Logging
+using Infiltrator
 
+Infiltrator.clear_disabled!()
 
 # using PrettyPrint:pretty_print
 # import PrettyPrint
