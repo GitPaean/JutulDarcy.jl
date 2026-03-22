@@ -85,6 +85,10 @@ function equilibriate_state(model, contacts,
         for i in 1:nc
             zmf[:, i] = composition(pts[i])
         end
+        println("zmf number of rows is  ", size(zmf, 1)); 
+        println(" zmf row 1 = ", zmf[1, :]);
+        println(" zmf row 2 = ", zmf[2, :]);
+        println(" zmf row 3 = ", zmf[3, :]);
         init[:OverallMoleFractions] = zmf
     end
     if (is_compositional || is_blackoil) && has_other_phase(sys)
@@ -208,7 +212,16 @@ function equilibriate_state!(init, depths, model, sys, contacts, depth, datum_pr
     # s, pc, active_phase = determine_saturations(depths, contacts, pressures; ref_ix = ref_ix, pc = pc, s_min = s_min, kwarg...)
 
     pressures, s, pc, active_phase = equilibriate_phase_pressures_and_saturations(model, depths, depth, contacts, datum_pressure, cells; s_min = s_min, T_z = T_z, kwarg...)
+println("pressures row 1 = ", pressures[1, :])
+println("pressures row 2 = ", pressures[2, :])
 
+println("s row 1 = ", s[1, :])
+println("s row 2 = ", s[2, :])
+
+println("pc row 1 = ", pc[1, :])
+println("pc row 2 = ", pc[2, :])
+    println("active phases:")
+    @show active_phase
     if nph > 1
         relperm = model.secondary_variables[:RelativePermeabilities]
         if !ismissing(sw)
@@ -1148,6 +1161,8 @@ function equilibriate_phase_pressures_and_saturations(model::SimulationModel, de
     fake_state[:PhaseMassDensities] = zeros(nph, 1)
     fake_state[:Temperature] = [NaN]
 
+    println(" composition is ", composition)
+    @show composition
     density_f(p, z, ph) = equilibrium_phase_density(p, z, ph, rho, T_z, fake_state, model, rs, rv, composition, fake_cell_ix, reg)
     # Find the reference phase. It is either liquid
 
@@ -1181,8 +1196,10 @@ function equilibriate_phase_pressures_and_saturations(model::SimulationModel, de
     end
     zmin = minimum(depths) - 1.0
     zmax = maximum(depths) + 1.0
+    println("Density function is ", density_function)
 
     pressures = determine_hydrostatic_pressures(depths, depth, zmin, zmax, contacts, datum_pressure, density_function, contacts_pc, ref_ix)
+    println("Determined hydrostatic pressures: ", pressures)
     if nph == 1
         s = ones(eltype(pressures), size(pressures))
         pc = zeros(eltype(pressures), size(pressures))
